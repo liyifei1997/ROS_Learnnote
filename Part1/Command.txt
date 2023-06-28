@@ -1,0 +1,21 @@
+#创建功能包
+    cd chapt3/chapt3_ws/src/
+    ros2 pkg create example_topic_rclpy  --build-type ament_python --dependencies rclpy
+
+
+#创建节点文件
+    cd example_topic_rclpy/example_topic_rclpy
+    touch topic_subscribe_02.py
+    touch topic_publisher_02.py
+
+
+#功能包构建
+colcon build
+
+
+#更新资源目录
+source install/setup.bash
+
+
+#RQT可视化工具
+rqt_graph
