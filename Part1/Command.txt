@@ -19,3 +19,17 @@ source install/setup.bash
 
 #RQT可视化工具
 rqt_graph
+
+
+#查看服务接口类型
+ros2 service type /add_two_ints
+
+
+#查看接口的服务
+ros2 service find example_interfaces/srv/AddTwoInts
+
+
+#查看接口数据类型
+ros2 interface show example_interfaces/srv/AddTwoInts
+
+
