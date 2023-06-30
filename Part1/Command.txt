@@ -9,11 +9,11 @@
     touch topic_publisher_02.py
 
 
-#功能包构建
+#功能包构建（与src文件夹同级）
 colcon build
 
 
-#更新资源目录
+#更新资源目录（与src文件夹同级）
 source install/setup.bash
 
 
