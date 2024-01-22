@@ -1,0 +1,2 @@
+# You should have created this in the Creating a Workspace Tutorial
+$ cd ~/catkin_ws/src
