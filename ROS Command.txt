@@ -1,0 +1,5 @@
+创建ROS工作空间：
+mkdir -p "WS_name"/src #must have src
+cd "WS_name"
+catkin_make
+
