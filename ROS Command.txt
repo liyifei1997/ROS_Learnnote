@@ -1,5 +1,12 @@
-创建ROS工作空间：
-mkdir -p "WS_name"/src #must have src
-cd "WS_name"
-catkin_make
+#Creating a Workspace named "catkin_ws"
+mkdir catkin_ws/src  
 
+#Creating a package named "beginner_tutorials"
+catkin_create_pkg beginner_tutorials std_msgs rospy roscpp 
+    # This is an example, do not try to run this
+    # catkin_create_pkg <package_name> [depend1] [depend2] [depend3]
+
+#Buliding a catkin workspace and sourcing the setup file
+cd ~/catkin_ws
+catkin_make  
+. ~/catkin_ws/devel/setup.bash
