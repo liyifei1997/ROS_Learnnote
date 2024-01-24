@@ -73,5 +73,5 @@ WorkSpace --- 自定义的工作空间
 7. Terminal启动
   1. roscore
   2. cd 工作空间
-      source ./devel/setup.bash
+      source ./devel/setup.bash    #!!!
       rosrun 包名 自定义文件名.py
