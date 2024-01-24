@@ -46,3 +46,32 @@ WorkSpace --- 自定义的工作空间
             |-- config 配置信息
 
         |-- CMakeLists.txt: 编译的基本配置
+
+
+
+
+1. 创建工作空间
+  mkdir -p 自定义空间名称/src
+  cd 自定义空间名称
+  catkin_make
+
+2. 创建包
+  cd src
+  catkin_create_pkg 自定义ROS包名 std_msgs rospy roscpp 
+
+3. 创建py（py在scripts文件夹下）
+  mkdir scripts
+
+4. 添加权限
+  chmod +x *.py
+
+5. 更改包下CamkeList.txt
+
+6. 工作空间编译
+  catkin_make
+
+7. Terminal启动
+  1. roscore
+  2. cd 工作空间
+      source ./devel/setup.bash
+      rosrun 包名 自定义文件名.py

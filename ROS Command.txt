@@ -9,7 +9,12 @@ catkin_create_pkg beginner_tutorials std_msgs rospy roscpp
 #Buliding a catkin workspace and sourcing the setup file
 cd ~/catkin_ws
 catkin_make  
-. ~/catkin_ws/devel/setup.bash
+
+
+
+!!!
+cd catkin_ws
+source ./devel/setup.bash
 
 
 
