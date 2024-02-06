@@ -8,3 +8,9 @@ angular:
   x: 0.0
   y: 0.0
   z: 1.0" 
+
+  Get the Message：
+
+  rostopic echo /kmriiwa/base/state/LaserB1Scan
+
+  
