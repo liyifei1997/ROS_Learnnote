@@ -1,0 +1,16 @@
+Base Move:
+
+rostopic pub -r 10 /kmriiwa/base/command/cmd_vel geometry_msgs/Twist "linear:
+  x: 1.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 1.0" 
+
+  Get the Message：
+
+  rostopic echo /kmriiwa/base/state/LaserB1Scan
+
+  
