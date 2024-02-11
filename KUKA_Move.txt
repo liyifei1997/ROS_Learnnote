@@ -1,5 +1,7 @@
 Base Move:
 
+rosmsg info geometry_msgs/Twist
+
 rostopic pub -r 10 /kmriiwa/base/command/cmd_vel geometry_msgs/Twist "linear:
   x: 1.0
   y: 0.0

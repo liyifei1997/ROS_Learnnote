@@ -1,0 +1,5 @@
+sudo apt-get install ros-noetic-moveit-servo
+export moveit_servo_DIR=/path/to/moveit_servo/installation
+
+sudo apt-get install ros-noetic-moveit-visual-tools
+export moveit_visual_tools_DIR=/path/to/moveit_visual_tools/installation
