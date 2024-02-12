@@ -1,0 +1,28 @@
+Turtle Run! 
+
+1. roscore  "run the ROS"
+2. rosrun turtlesim turtlesim_node  "turtlesim"
+3. rosrun turtlesim turtle_teleop_key  "keyboard control"
+4. rqt_graph  "show the nodes"  "/turtle1/cmd_vel"
+5. rostopic list -v  "show the message type"
+6. rostopic echo /turtle1/cmd_vel  "move turtle, get message"
+8. rostopic pub -r 10 /turtle1/cmd_vel geometry_msgs/Twist
+
+
+Launch file:
+1. roslaunch turtlesim.launch
+
+
+
+KUKA Run!
+
+1. roscore
+2. roslaunch kmriiwa_gazebo kmriiwa_test_zone.launch "remember source devel/setup.bash"
+3. rosmsg info geometry_msgs/Twist
+4. rostopic pub -r 10 /kmriiwa/base/command/cmd_vel geometry_msgs/Twist
+5. rosrun kmriiwa_move kmr_square.py
+
+
+Xarm Run!
+
+1. $ roslaunch xarm_gazebo xarm7_beside_table.launch [run_demo:=true] [add_gripper:=true] [add_vacuum_gripper:=true] 
