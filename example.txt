@@ -33,3 +33,5 @@ source devel/setup.bash
 roscore -p 30001
 
 roslaunch kmriiwa_bringup kmriiwa_bringup.launch
+
+rostopic pub -r 10 /kmriiwa/arm/command/JointPosition kmriiwa_msgs/JointPosition
