@@ -25,4 +25,11 @@ KUKA Run!
 
 Xarm Run!
 
-1. $ roslaunch xarm_gazebo xarm7_beside_table.launch [run_demo:=true] [add_gripper:=true] [add_vacuum_gripper:=true] 
+1. roslaunch xarm_gazebo xarm7_beside_table.launch [run_demo:=true] [add_gripper:=true] [add_vacuum_gripper:=true] 
+
+
+source devel/setup.bash
+
+roscore -p 30001
+
+roslaunch kmriiwa_bringup kmriiwa_bringup.launch
