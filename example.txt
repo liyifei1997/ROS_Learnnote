@@ -20,7 +20,7 @@ KUKA Run!
 2. roslaunch kmriiwa_gazebo kmriiwa_test_zone.launch "remember source devel/setup.bash"
 3. rosmsg info geometry_msgs/Twist
 4. rostopic pub -r 10 /kmriiwa/base/command/cmd_vel geometry_msgs/Twist
-5. rosrun kmriiwa_move kmr_square.py
+5. rosrun kmriiwa_moving base_moving.py 
 
 
 Xarm Run!
@@ -41,8 +41,8 @@ chmod +x *.py
 rosrun rqt_robot_steering rqt_robot_steering
 
 
-rostopic pub -r 10 /kmriiwa/arm/command/JointPosition kmriiwa_msgs/JointPosition "header:
-  seq: 0
+rqostopic pub -r 10 /kmriiwa/arm/command/JointPosition kmriiwa_msgs/JointPosition "header:
+  se: 0
   stamp: {secs: 0, nsecs: 0}
   frame_id: ''
 a1: 1.5
