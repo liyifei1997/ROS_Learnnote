@@ -41,7 +41,7 @@ chmod +x *.py
 rosrun rqt_robot_steering rqt_robot_steering
 
 
-rqostopic pub -r 10 /kmriiwa/arm/command/JointPosition kmriiwa_msgs/JointPosition "header:
+rostopic pub -r 10 /kmriiwa/arm/command/JointPosition kmriiwa_msgs/JointPosition "header:
   se: 0
   stamp: {secs: 0, nsecs: 0}
   frame_id: ''
