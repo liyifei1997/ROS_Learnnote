@@ -278,4 +278,151 @@ axes_position_referenced: False
 safety_state_enabled: True
 ---
 
-6. rostopic echo /kmriiwa/arm/state/JointPositionReached
+6. rostopic type /kmriiwa/arm/manipulator_controller/follow_joint_trajectory/feedback 
+control_msgs/FollowJointTrajectoryActionFeedback
+yfl@Alienware:~/CAIS_WS/src/kmriiwa_moving/scripts$ rosmsg show control_msgs/FollowJointTrajectoryActionFeedback 
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+actionlib_msgs/GoalStatus status
+  uint8 PENDING=0
+  uint8 ACTIVE=1
+  uint8 PREEMPTED=2
+  uint8 SUCCEEDED=3
+  uint8 ABORTED=4
+  uint8 REJECTED=5
+  uint8 PREEMPTING=6
+  uint8 RECALLING=7
+  uint8 RECALLED=8
+  uint8 LOST=9
+  actionlib_msgs/GoalID goal_id
+    time stamp
+    string id
+  uint8 status
+  string text
+control_msgs/FollowJointTrajectoryFeedback feedback
+  std_msgs/Header header
+    uint32 seq
+    time stamp
+    string frame_id
+  string[] joint_names
+  trajectory_msgs/JointTrajectoryPoint desired
+    float64[] positions
+    float64[] velocities
+    float64[] accelerations
+    float64[] effort
+    duration time_from_start
+  trajectory_msgs/JointTrajectoryPoint actual
+    float64[] positions
+    float64[] velocities
+    float64[] accelerations
+    float64[] effort
+    duration time_from_start
+  trajectory_msgs/JointTrajectoryPoint error
+    float64[] positions
+    float64[] velocities
+    float64[] accelerations
+    float64[] effort
+    duration time_from_start
+
+
+7. rostopic type /kmriiwa/arm/manipulator_controller/follow_joint_trajectory/cancel 
+actionlib_msgs/GoalID
+yfl@Alienware:~/CAIS_WS/src/kmriiwa_moving/scripts$ rosmsg show actionlib_msgs/GoalID
+time stamp
+string id
+
+
+8. rostopic type /kmriiwa/arm/manipulator_controller/follow_joint_trajectory/goal
+control_msgs/FollowJointTrajectoryActionGoal
+yfl@Alienware:~/CAIS_WS/src/kmriiwa_moving/scripts$ rosmsg show control_msgs/FollowJointTrajectoryActionGoal
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+actionlib_msgs/GoalID goal_id
+  time stamp
+  string id
+control_msgs/FollowJointTrajectoryGoal goal
+  trajectory_msgs/JointTrajectory trajectory
+    std_msgs/Header header
+      uint32 seq
+      time stamp
+      string frame_id
+    string[] joint_names
+    trajectory_msgs/JointTrajectoryPoint[] points
+      float64[] positions
+      float64[] velocities
+      float64[] accelerations
+      float64[] effort
+      duration time_from_start
+  control_msgs/JointTolerance[] path_tolerance
+    string name
+    float64 position
+    float64 velocity
+    float64 acceleration
+  control_msgs/JointTolerance[] goal_tolerance
+    string name
+    float64 position
+    float64 velocity
+    float64 acceleration
+  duration goal_time_tolerance
+
+
+  9. rostopic type /kmriiwa/arm/manipulator_controller/follow_joint_trajectory/result
+control_msgs/FollowJointTrajectoryActionResult
+yfl@Alienware:~/CAIS_WS/src/kmriiwa_moving/scripts$ rosmsg show control_msgs/FollowJointTrajectoryActionResult 
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+actionlib_msgs/GoalStatus status
+  uint8 PENDING=0
+  uint8 ACTIVE=1
+  uint8 PREEMPTED=2
+  uint8 SUCCEEDED=3
+  uint8 ABORTED=4
+  uint8 REJECTED=5
+  uint8 PREEMPTING=6
+  uint8 RECALLING=7
+  uint8 RECALLED=8
+  uint8 LOST=9
+  actionlib_msgs/GoalID goal_id
+    time stamp
+    string id
+  uint8 status
+  string text
+control_msgs/FollowJointTrajectoryResult result
+  int32 SUCCESSFUL=0
+  int32 INVALID_GOAL=-1
+  int32 INVALID_JOINTS=-2
+  int32 OLD_HEADER_TIMESTAMP=-3
+  int32 PATH_TOLERANCE_VIOLATED=-4
+  int32 GOAL_TOLERANCE_VIOLATED=-5
+  int32 error_code
+  string error_string
+
+  10. rostopic type /kmriiwa/arm/manipulator_controller/follow_joint_trajectory/status
+actionlib_msgs/GoalStatusArray
+yfl@Alienware:~/CAIS_WS/src/kmriiwa_moving/scripts$ rosmsg show actionlib_msgs/GoalStatusArray 
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+actionlib_msgs/GoalStatus[] status_list
+  uint8 PENDING=0
+  uint8 ACTIVE=1
+  uint8 PREEMPTED=2
+  uint8 SUCCEEDED=3
+  uint8 ABORTED=4
+  uint8 REJECTED=5
+  uint8 PREEMPTING=6
+  uint8 RECALLING=7
+  uint8 RECALLED=8
+  uint8 LOST=9
+  actionlib_msgs/GoalID goal_id
+    time stamp
+    string id
+  uint8 status
+  string text
