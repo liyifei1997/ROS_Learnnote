@@ -1,0 +1,114 @@
+########## -------------gazebo start up ----------------- ##########
+
+1.  open gazebo with empty word and kmr robot
+"
+roslaunch kmriiwa_gazebo kmriiwa_empty_world.launch use_namespace:=false
+"
+
+2.  open gazebo with cais lab model initialized (it should include the kmr robot as well) 
+"
+roslaunch kmriiwa_gazebo cais107.launch use_namespace:=false
+"
+
+3. kill it
+"
+pkill -f gzserver; pkill -f gzclient
+"
+
+
+4.  open gazebo with cais lab model initialized (it should include the kmr robot as well) 
+"
+roslaunch kmriiwa_gazebo cais107.launch use_namespace:=false
+"
+
+5.  run desired python file directly (base only + with laser scan)
+"
+rosrun kmr_overlay kmr_drive_via_gazebo.py \  
+    _scan_topic:=/kmriiwa/base/state/LaserB1Scan \  
+    _cmd_vel_topic:=/kmriiwa/base/command/cmd_vel \  
+    _forward_angle_deg:=90 \  
+    _v_forward:=0.25 _stop_range:=1.0 _window_deg:=20 _min_hits:=3 \  
+    _stop_on_nodata:=true _log_throttle_s:=0.2^C
+
+rosrun kmr_overlay kmr_Safety_Stop.py \
+  _scan_topic:=/kmriiwa/base/state/LaserB1Scan \
+  _cmd_vel_topic:=/kmriiwa/base/command/cmd_vel \
+  _forward_angle_deg:=90 \
+  _window_deg:=20 \
+  _v_forward:=0.5 \
+  _v_slow:=0.2 \
+  _slow_range:=1.0 \
+  _stop_range:=0.5 \
+  _hysteresis:=0.1 \
+  _enable_fallback:=true \
+  _stop_on_nodata:=true
+
+
+rosrun kmr_overlay kmr_Safety_Detour.py \
+  _scan_topic:=/kmriiwa/base/state/LaserB1Scan \
+  _cmd_vel_topic:=/kmriiwa/base/command/cmd_vel \
+  _forward_angle_deg:=90 \
+  _window_deg:=20 \
+  _v_forward:=0.5 \
+  _v_slow:=0.2 \
+  _slow_range:=1.0 \
+  _stop_range:=0.5 \
+  _hysteresis:=0.1 \
+  _w_turn:=0.6 \
+  _turn_angle_deg:=90 \
+  _turn_extra_deg:=5 \
+  _min_turn_time:=0.8 \
+  _enable_fallback:=true \
+  _stop_on_nodata:=true
+"
+
+5.  if you wish to run python file withboth base and arm control
+    copy pase the following into the terminal and wait till the terminal pops up a info log, if it didn't pop up, kill and past again
+"
+python3 - <<'PY'
+import rospy, math
+from geometry_msgs.msg import Twist
+from gazebo_msgs.msg import ModelStates, ModelState
+from gazebo_msgs.srv import SetModelState
+from nav_msgs.msg import Odometry
+MODEL="kmriiwa"   # <-- confirm with: rostopic echo -n1 /gazebo/model_states | sed -n '1,6p'
+CMD="/kmriiwa/base/command/cmd_vel"
+ODOM="/kmriiwa/base/state/odom"
+rospy.init_node("kmr_base_shim")
+cmd=Twist(); ms=None; idx=None
+rospy.Subscriber(CMD, Twist, lambda m: globals().update(cmd=m), queue_size=1)
+rospy.Subscriber("/gazebo/model_states", ModelStates, lambda m: globals().update(ms=m), queue_size=1)
+set_state=rospy.ServiceProxy("/gazebo/set_model_state", SetModelState)
+pub=rospy.Publisher(ODOM, Odometry, queue_size=10)
+r=rospy.Rate(20); last=rospy.Time.now()
+rospy.loginfo("Driving '%s' from %s", MODEL, CMD)
+while not rospy.is_shutdown():
+    if ms is None: r.sleep(); continue
+    if idx is None:
+        try: idx=ms.name.index(MODEL)
+        except ValueError: r.sleep(); continue
+    now=rospy.Time.now(); dt=max((now-last).to_sec(), 1/50.0); last=now
+    pose=ms.pose[idx]; twist=ms.twist[idx]
+    yaw=2*math.atan2(pose.orientation.z, pose.orientation.w)
+    vx=cmd.linear.x*math.cos(yaw)-cmd.linear.y*math.sin(yaw)
+    vy=cmd.linear.x*math.sin(yaw)+cmd.linear.y*math.cos(yaw)
+    pose.position.x += vx*dt; pose.position.y += vy*dt
+    yaw += cmd.angular.z*dt
+    pose.orientation.z=math.sin(yaw/2); pose.orientation.w=math.cos(yaw/2)
+    twist.linear.x=vx; twist.linear.y=vy; twist.angular.z=cmd.angular.z
+    try: set_state(ModelState(model_name=MODEL, pose=pose, twist=twist, reference_frame="world"))
+    except Exception: pass
+    od=Odometry(); od.header.stamp=now; od.header.frame_id="odom"; od.child_frame_id="base_link"
+    od.pose.pose=pose; od.twist.twist=twist; pub.publish(od)
+    r.sleep()
+PY
+"
+
+6. the above PY are used for the following scripts
+"
+rosrun kmr_overlay task_gz.py /cmd_vel:=/kmriiwa/base/command/cmd_vel
+
+rosrun kmr_overlay base_cmd_test.py /cmd_vel:=/kmriiwa/base/command/cmd_vel
+
+rosrun kmr_overlay kmr_seq_validated_251013_2.py /cmd_vel:=/kmriiwa/base/command/cmd_vel
+"
